@@ -1,0 +1,47 @@
+:root {
+  --infoblue: #33b5e5;
+  --infoblueDark: #2e9ac2;
+  --placeholderGray: rgb(145, 145, 145);
+  --infoblueTrans: #33b6e515;
+}
+
+#stepper-card-container {
+  max-width: 650px;
+  /* height: 700px; */
+  padding: 10px;
+}
+
+#stepper-card {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+
+#stepper-header {
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  width: 90%;
+  background-color: var(--infoblue);
+  border-radius: 4px;
+  margin-top: -45px;
+}
+
+#stepper-header h6 {
+  color: white;
+  margin: 5px;
+  padding: 10px 10px;
+  border-radius: 4px;
+  text-align: center;
+  cursor: default;
+}
+
+#stepper-header h6.current-step {
+  background-color: var(--infoblueDark);
+}
+
+#stepper-form-row {
+  margin-top: 45px;
+  height: 600px;
+}
