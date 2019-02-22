@@ -1,12 +1,13 @@
 :root {
   --infoblue: #33b5e5;
   --infoblueDark: #2e9ac2;
+  --infoblueDarkLight: #34abd6;
   --placeholderGray: rgb(145, 145, 145);
   --infoblueTrans: #33b6e515;
 }
 
 #stepper-card-container {
-  max-width: 650px;
+  max-width: 550px;
   /* height: 700px; */
   padding: 10px;
 }
@@ -22,10 +23,10 @@
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
-  width: 90%;
+  width: 95%;
   background-color: var(--infoblue);
   border-radius: 4px;
-  margin-top: -45px;
+  margin-top: -60px;
 }
 
 #stepper-header h6 {
@@ -34,14 +35,47 @@
   padding: 10px 10px;
   border-radius: 4px;
   text-align: center;
-  cursor: default;
+  cursor: pointer;
+}
+
+#stepper-header h6:hover {
+  background-color: var(--infoblueDarkLight);
 }
 
 #stepper-header h6.current-step {
   background-color: var(--infoblueDark);
 }
 
-#stepper-form-row {
+#stepper-content-row {
   margin-top: 45px;
-  height: 600px;
+}
+
+.content-body {
+  height: 400px;
+  padding: 10px;
+}
+
+.body-step {
+  display: none;
+}
+
+.body-step.current-step {
+  display: initial;
+}
+
+#step-back-button {
+  display: none;
+}
+
+#step-continue-button {
+  display: none;
+  margin: 8px !important;
+}
+
+#step-back-button.show-button {
+  display: initial;
+}
+
+#step-continue-button.show-button {
+  display: initial;
 }

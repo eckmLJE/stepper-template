@@ -57,35 +57,35 @@
                       class="card-body d-flex justify-content-around text-muted py-2"
                     >
                       <h6
-                        class="card-title current-step"
+                        class="header-step current-step"
                         style="flex-grow: 1; flex-basis: 0;"
                         data-step="1"
                       >
                         Step 1
                       </h6>
                       <h6
-                        class="card-title"
+                        class="header-step"
                         style="flex-grow: 1; flex-basis: 0;"
                         data-step="2"
                       >
                         Step 2
                       </h6>
                       <h6
-                        class="card-title"
+                        class="header-step"
                         style="flex-grow: 1; flex-basis: 0;"
                         data-step="3"
                       >
                         Step 3
                       </h6>
                       <h6
-                        class="card-title"
+                        class="header-step"
                         style="flex-grow: 1; flex-basis: 0;"
                         data-step="4"
                       >
                         Step 4
                       </h6>
                       <h6
-                        class="card-title"
+                        class="header-step"
                         style="flex-grow: 1; flex-basis: 0;"
                         data-step="5"
                       >
@@ -95,30 +95,45 @@
                   </div>
                 </div>
               </div>
-              <!-- Form Content Row -->
-              <div id="stepper-form-row" class="row">
-                <div class="col-12">
-                  Form Content Here
+              <!-- Content Row -->
+              <div id="stepper-content-row" class="row">
+                <!-- Content Bodies -->
+                <div class="col-12 card-body content-body">
+                  <div class="body-step current-step" data-step="1">
+                    Step 1 Card Body
+                  </div>
+                  <div class="body-step" data-step="2">
+                    Step 2 Card Body
+                  </div>
+                  <div class="body-step" data-step="3">
+                    Step 3 Card Body
+                  </div>
+                  <div class="body-step" data-step="4">
+                    Step 4 Card Body
+                  </div>
+                  <div class="body-step" data-step="5">
+                    Step 5 Card Body
+                  </div>
                 </div>
               </div>
-              <!-- Button Row -->
+              <!-- Nav Button Row -->
               <div id="stepper-button-row" class="row">
                 <div class="col-6 d-flex justify-content-center">
                   <button
-                    id="step-two-back-button"
+                    id="step-back-button"
                     type="button"
-                    class="btn btn-outline-info p-2 px-sm-4"
+                    class="btn btn-outline-info p-2 px-sm-4 stepper-button"
                     style="min-width: 80%"
                     required
                   >
-                    Back to Basic
+                    Back
                   </button>
                 </div>
                 <div class="col-6 d-flex justify-content-center">
                   <button
-                    id="payment-continue-button"
+                    id="step-continue-button"
                     type="submit"
-                    class="btn btn-info p-2 px-sm-4"
+                    class="btn btn-info p-2 px-sm-4 show-button stepper-button"
                     style="min-width: 80%"
                     required
                   >
