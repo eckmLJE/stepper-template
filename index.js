@@ -13,7 +13,6 @@ var continueButton = $("#step-continue-button");
 // Event Handlers
 
 headerSteps.click(handleStepClick);
-
 backButton.click(handleBackClick);
 continueButton.click(handleContinueClick);
 
@@ -38,7 +37,7 @@ function handleBackClick() {
   bodySteps.each(applyCurrentStep);
 }
 
-function manageButtons() {
+function manageButtonsDisplay() {
   currentStep > 1
     ? backButton.addClass("show-button")
     : backButton.removeClass("show-button");
@@ -58,5 +57,8 @@ function applyCurrentStep() {
   $(this).data().step === currentStep
     ? $(this).addClass("current-step")
     : $(this).removeClass("current-step");
-  manageButtons();
+  manageButtonsDisplay();
 }
+
+// Validation
+
