@@ -1,64 +1,81 @@
-// Global Variables
+// Global constiables
 
-var currentStep = 1;
+const stepperState = {
+  currentStep: 1
+};
 
 // Selectors
 
-var headerSteps = $(".header-step");
-var bodySteps = $(".body-step");
+const getHeaderSteps = () => document.querySelectorAll(".header-step");
+const getBodySteps = () => document.querySelectorAll(".body-step");
 
-var backButton = $("#step-back-button");
-var continueButton = $("#step-continue-button");
+const getBackButton = () => document.querySelector("#step-back-button");
+const getContinueButton = () => document.querySelector("#step-continue-button");
+
+// Listeners
+
+const addBackButtonListener = () =>
+  getBackButton().addEventListener("click", handleBackClick);
+
+const addContinueButtonListener = () =>
+  getContinueButton().addEventListener("click", handleContinueClick);
+
+const addHeaderStepsListeners = () =>
+  getHeaderSteps().forEach(headerStep =>
+    headerStep.addEventListener("click", handleStepClick)
+  );
+
+const applyListeners = () => {
+  addBackButtonListener();
+  addContinueButtonListener();
+  addHeaderStepsListeners();
+};
 
 // Event Handlers
 
-headerSteps.click(handleStepClick);
-backButton.click(handleBackClick);
-continueButton.click(handleContinueClick);
-
-function handleStepClick() {
-  var step = $(this).data().step;
+const handleStepClick = e => {
+  const step = e.currentTarget.dataset.step;
   setCurrentStep(step);
-  headerSteps.each(applyCurrentStep);
-  bodySteps.each(applyCurrentStep);
-}
+  getHeaderSteps().forEach(applyCurrentStep);
+  getBodySteps().forEach(applyCurrentStep);
+};
 
-function handleContinueClick() {
-  step = currentStep + 1;
+const handleContinueClick = () => {
+  const step = stepperState.currentStep + 1;
   setCurrentStep(step);
-  headerSteps.each(applyCurrentStep);
-  bodySteps.each(applyCurrentStep);
-}
+  getHeaderSteps().forEach(applyCurrentStep);
+  getBodySteps().forEach(applyCurrentStep);
+};
 
-function handleBackClick() {
-  step = currentStep - 1;
+const handleBackClick = () => {
+  step = stepperState.currentStep - 1;
   setCurrentStep(step);
-  headerSteps.each(applyCurrentStep);
-  bodySteps.each(applyCurrentStep);
-}
+  getHeaderSteps().forEach(applyCurrentStep);
+  getBodySteps().forEach(applyCurrentStep);
+};
 
-function manageButtonsDisplay() {
-  currentStep > 1
-    ? backButton.addClass("show-button")
-    : backButton.removeClass("show-button");
-  currentStep < 5
-    ? continueButton.addClass("show-button")
-    : continueButton.removeClass("show-button");
-}
+const manageButtonsDisplay = () => {
+  stepperState.currentStep > 1
+    ? getBackButton().classList.add("show-button")
+    : getBackButton().classList.remove("show-button");
+  stepperState.currentStep < 5
+    ? getContinueButton().classList.add("show-button")
+    : getContinueButton().classList.remove("show-button");
+};
 
 // Navigation
 
-function setCurrentStep(step) {
-  currentStep = step;
-  console.log(currentStep);
-}
+const setCurrentStep = step => (stepperState.currentStep = step);
 
-function applyCurrentStep() {
-  $(this).data().step === currentStep
-    ? $(this).addClass("current-step")
-    : $(this).removeClass("current-step");
+const applyCurrentStep = ele => {
+  ele.dataset.step === stepperState.currentStep
+    ? ele.classList.add("current-step")
+    : ele.classList.remove("current-step");
   manageButtonsDisplay();
-}
+};
 
 // Validation
 
+// Initialize
+
+applyListeners();
