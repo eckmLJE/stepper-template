@@ -13,6 +13,8 @@ var stepperState = {
 
 // Selectors
 
+var stepForms = $("form.body-form");
+
 var headerSteps = $(".header-step");
 var bodySteps = $(".body-step");
 
@@ -22,39 +24,53 @@ var continueButton = $("#step-continue-button");
 var stepOneInput = $("#username-input");
 var stepTwoInput = $("#mailing-city-input");
 
-var stepForms = $("form");
+function getCurrentForm() {
+  return document.querySelector(
+    'form[data-step="' + stepperState.currentStep + '"]'
+  );
+}
 
 // Listeners
 
 headerSteps.click(handleStepClick);
 backButton.click(handleBackClick);
 continueButton.click(handleContinueClick);
-stepForms.submit(handleContinueClick);
+stepForms.on("submit", handleContinueClick);
 
 // Event Handlers
-
-function handleStepClick(e) {
-  e.preventDefault();
-  console.log("continue handler");
-  var step = $(this).data().step;
-  applyCurrentStep(step);
-}
 
 function handleContinueClick(e) {
   e.preventDefault();
   console.log("continue handler");
-  step = stepperState.currentStep + 1;
-  applyCurrentStep(step);
+  validateStepForward(e);
+}
+
+function validateStepForward(e) {
+  getCurrentForm().checkValidity()
+    ? stepForward()
+    : e.currentTarget.classList.add("was-validated");
 }
 
 function handleBackClick(e) {
   e.preventDefault();
-  console.log("continue handler");
+  console.log("back handler");
   step = stepperState.currentStep - 1;
   applyCurrentStep(step);
 }
 
+function handleStepClick(e) {
+  e.preventDefault();
+  console.log("step click handler");
+  var step = $(this).data().step;
+  applyCurrentStep(step);
+}
+
 // Navigation
+
+function stepForward() {
+  step = stepperState.currentStep + 1;
+  applyCurrentStep(step);
+}
 
 function setCurrentStep(step) {
   stepperState.currentStep = step;
