@@ -2,13 +2,7 @@
 
 var stepperState = {
   currentStep: 1,
-  validated: {
-    step1: false,
-    step2: false,
-    step3: false,
-    step4: false,
-    step5: false
-  }
+  validated: [false, false, false, false, false]
 };
 
 // Selectors
@@ -21,14 +15,16 @@ var bodySteps = $(".body-step");
 var backButton = $("#step-back-button");
 var continueButton = $("#step-continue-button");
 
+function getCurrentForm() {
+  return $('form[data-step="' + stepperState.currentStep + '"]');
+}
+
+function getStepHeader(stepNum) {
+  return $('h6[data-step="' + stepNum + '"]');
+}
+
 var stepOneInput = $("#username-input");
 var stepTwoInput = $("#mailing-city-input");
-
-function getCurrentForm() {
-  return document.querySelector(
-    'form[data-step="' + stepperState.currentStep + '"]'
-  );
-}
 
 // Listeners
 
@@ -41,40 +37,35 @@ stepForms.on("submit", handleContinueClick);
 
 function handleContinueClick(e) {
   e.preventDefault();
-  console.log("continue handler");
   validateStepForward(e);
-}
-
-function validateStepForward(e) {
-  getCurrentForm().checkValidity()
-    ? stepForward()
-    : e.currentTarget.classList.add("was-validated");
 }
 
 function handleBackClick(e) {
   e.preventDefault();
-  console.log("back handler");
-  step = stepperState.currentStep - 1;
-  applyCurrentStep(step);
+  stepBack();
 }
 
-function handleStepClick(e) {
-  e.preventDefault();
-  console.log("step click handler");
+function handleStepClick() {
   var step = $(this).data().step;
-  applyCurrentStep(step);
+  validateStepClick(step);
 }
 
 // Navigation
 
 function stepForward() {
+  console.log("stepForward reached");
+  setCurrentStepValidated();
   step = stepperState.currentStep + 1;
+  applyCurrentStep(step);
+}
+
+function stepBack() {
+  step = stepperState.currentStep - 1;
   applyCurrentStep(step);
 }
 
 function setCurrentStep(step) {
   stepperState.currentStep = step;
-  console.log(stepperState.currentStep);
 }
 
 function applyCurrentStep(step) {
@@ -110,6 +101,43 @@ function focusFirstInput() {
 }
 
 // Validation
+
+function validateStepForward() {
+  var currentForm = getCurrentForm()[0];
+  currentForm.checkValidity() ? stepForward() : invalidateStep(currentForm);
+}
+
+function invalidateStep(target) {
+  setCurrentStepInvalidated();
+  target.classList.add("was-validated");
+}
+
+function validateStepClick(step) {
+  currentForm = getCurrentForm()[0];
+  currentForm.checkValidity() ? clickStep(step) : invalidateStep(currentForm);
+}
+
+function clickStep(step) {
+  setCurrentStepValidated();
+  var previousSteps = stepperState.validated.slice(step);
+  !previousSteps.includes(false)
+    ? applyCurrentStep(step)
+    : outlineInvalidSteps();
+}
+
+function outlineInvalidSteps() {
+  stepperState.validated.forEach(function(step, i) {
+    if (!step) getStepHeader(i + 1).addClass("step-header-invalid");
+  });
+}
+
+function setCurrentStepValidated() {
+  stepperState.validated[stepperState.currentStep - 1] = true;
+}
+
+function setCurrentStepInvalidated() {
+  stepperState.validated[stepperState.currentStep - 1] = false;
+}
 
 // Initialize
 

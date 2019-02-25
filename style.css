@@ -46,6 +46,9 @@
   background-color: var(--infoblueDark);
 }
 
+#stepper-header h6.step-header-invalid {
+}
+
 #stepper-content-row {
   margin-top: 45px;
 }
