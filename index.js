@@ -19,25 +19,37 @@ var bodySteps = $(".body-step");
 var backButton = $("#step-back-button");
 var continueButton = $("#step-continue-button");
 
+var stepOneInput = $("#username-input");
+var stepTwoInput = $("#mailing-city-input");
+
+var stepForms = $("form");
+
 // Listeners
 
 headerSteps.click(handleStepClick);
 backButton.click(handleBackClick);
 continueButton.click(handleContinueClick);
+stepForms.submit(handleContinueClick);
 
 // Event Handlers
 
-function handleStepClick() {
+function handleStepClick(e) {
+  e.preventDefault();
+  console.log("continue handler");
   var step = $(this).data().step;
   applyCurrentStep(step);
 }
 
-function handleContinueClick() {
+function handleContinueClick(e) {
+  e.preventDefault();
+  console.log("continue handler");
   step = stepperState.currentStep + 1;
   applyCurrentStep(step);
 }
 
-function handleBackClick() {
+function handleBackClick(e) {
+  e.preventDefault();
+  console.log("continue handler");
   step = stepperState.currentStep - 1;
   applyCurrentStep(step);
 }
@@ -60,6 +72,7 @@ function applyStepStyling() {
     ? $(this).addClass("current-step")
     : $(this).removeClass("current-step");
   manageButtonsDisplay();
+  focusFirstInput();
 }
 
 function manageButtonsDisplay() {
@@ -71,4 +84,17 @@ function manageButtonsDisplay() {
     : continueButton.removeClass("show-button");
 }
 
+function focusFirstInput() {
+  switch (stepperState.currentStep) {
+    case 1:
+      stepOneInput.focus();
+    case 2:
+      stepTwoInput.focus();
+  }
+}
+
 // Validation
+
+// Initialize
+
+stepOneInput.focus();
