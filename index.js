@@ -1,6 +1,15 @@
 // Global Variables
 
-var currentStep = 1;
+var stepperState = {
+  currentStep: 1,
+  validated: {
+    step1: false,
+    step2: false,
+    step3: false,
+    step4: false,
+    step5: false
+  }
+};
 
 // Selectors
 
@@ -10,55 +19,56 @@ var bodySteps = $(".body-step");
 var backButton = $("#step-back-button");
 var continueButton = $("#step-continue-button");
 
-// Event Handlers
+// Listeners
 
 headerSteps.click(handleStepClick);
 backButton.click(handleBackClick);
 continueButton.click(handleContinueClick);
 
+// Event Handlers
+
 function handleStepClick() {
   var step = $(this).data().step;
-  setCurrentStep(step);
-  headerSteps.each(applyCurrentStep);
-  bodySteps.each(applyCurrentStep);
+  applyCurrentStep(step);
 }
 
 function handleContinueClick() {
-  step = currentStep + 1;
-  setCurrentStep(step);
-  headerSteps.each(applyCurrentStep);
-  bodySteps.each(applyCurrentStep);
+  step = stepperState.currentStep + 1;
+  applyCurrentStep(step);
 }
 
 function handleBackClick() {
-  step = currentStep - 1;
-  setCurrentStep(step);
-  headerSteps.each(applyCurrentStep);
-  bodySteps.each(applyCurrentStep);
-}
-
-function manageButtonsDisplay() {
-  currentStep > 1
-    ? backButton.addClass("show-button")
-    : backButton.removeClass("show-button");
-  currentStep < 5
-    ? continueButton.addClass("show-button")
-    : continueButton.removeClass("show-button");
+  step = stepperState.currentStep - 1;
+  applyCurrentStep(step);
 }
 
 // Navigation
 
 function setCurrentStep(step) {
-  currentStep = step;
-  console.log(currentStep);
+  stepperState.currentStep = step;
+  console.log(stepperState.currentStep);
 }
 
-function applyCurrentStep() {
-  $(this).data().step === currentStep
+function applyCurrentStep(step) {
+  setCurrentStep(step);
+  headerSteps.each(applyStepStyling);
+  bodySteps.each(applyStepStyling);
+}
+
+function applyStepStyling() {
+  $(this).data().step === stepperState.currentStep
     ? $(this).addClass("current-step")
     : $(this).removeClass("current-step");
   manageButtonsDisplay();
 }
 
-// Validation
+function manageButtonsDisplay() {
+  stepperState.currentStep > 1
+    ? backButton.addClass("show-button")
+    : backButton.removeClass("show-button");
+  stepperState.currentStep < 5
+    ? continueButton.addClass("show-button")
+    : continueButton.removeClass("show-button");
+}
 
+// Validation
